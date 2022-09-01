@@ -1,0 +1,7 @@
+.alert {
+    background-color: yellow;
+}
+
+.alert-warning{
+    display: none;
+}

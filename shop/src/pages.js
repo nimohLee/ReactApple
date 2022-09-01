@@ -3,6 +3,10 @@ import {Shoes,data} from './data.js';
 import {Button, Navbar, Container, Nav, Col, Row} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import './pages.css';
+
 
 let YellowBtn = styled.button`
   background : yellow;
@@ -50,11 +54,26 @@ function Detail(props){
     let 찾은상품 = props.shoes.find(function(x) {
       return x.id == id
     });
+
+    let[on,setOn] = useState(true);
+    const alert = document.querySelector('.alert');
+
+    useEffect(()=>{
+   
+    setTimeout(()=>{setOn(false)},2000);
+
+    })
+
+    
+
+
     console.log();
     return(
         <div className="container">
           <YellowBtn>버튼</YellowBtn>
           <Box>box</Box>
+          
+          {on==true?<div className='alert'>2초 이내 구매 시 할인</div>:null}
           <div className="row">
             <div className="col-md-6">
               <img src={"https://codingapple1.github.io/shop/shoes"+(parseInt(id)+1)+".jpg"} width="100%" />
