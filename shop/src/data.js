@@ -29,9 +29,9 @@ function Shoes(props){
     return(
         <div className="shoes-item">
             <img src={'https://codingapple1.github.io/shop/'+props.img+'.jpg'} width = "80%"></img>
-            <h4>{data[props.idx].title}</h4>
-            <p>{data[props.idx].content}</p>
-            <p>₩ {data[props.idx].price}</p>
+            <h4>{props.shoesData[props.idx].title}</h4>
+            <p>{props.shoesData[props.idx].content}</p>
+            <p>₩ {props.shoesData[props.idx].price}</p>
         </div>
     );
 }
