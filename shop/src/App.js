@@ -8,7 +8,7 @@ import bg from './bg.png'; // import로 이미지 불러오기
 import {Shoes,data} from './data.js';
 import {Routes,Route,Link, useNavigate, Outlet} from 'react-router-dom'
 import {Home,Detail} from './pages.js';
-
+import Cart from './Cart.js';
 
 function App() {
 
@@ -65,6 +65,7 @@ function App() {
         <Route path='location' element = {<div>위치정보임</div>}></Route>
       </Route>
       <Route path='*' element= {<h4>없는 페이지입니다</h4>}></Route>
+      <Route path='/cart' element={<Cart/>}></Route>
     </Routes>
   
     

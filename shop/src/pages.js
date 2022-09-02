@@ -127,22 +127,26 @@ function Detail(props){
     let[on,setOn] = useState(true);
     let[text,setText] = useState("");
     let[nav,setNav] = useState(0);
+    let[fade,setFade] = useState('');
 
     useEffect(()=>{
       setOn(true);
-      let a = setTimeout(()=>{setOn(false)},2000);   // 기존 타이머 제거 후 타이머 실행
+      let a = setTimeout(()=>{setOn(false); setFade('end')},2000);   
+      let b = setTimeout(()=>{ setFade('end')},500);   // 기존 타이머 제거 후 타이머 실행
       return() =>{
         /* 여기 있는 게 먼저 실행됨 ( clean up function - html 같은 거 싹 지우고 실행할 수 있음)
            주로 1 .타이머제거 2. socket 연결요청제거 3. ajax요청 중단 등 데이터요청 관련 등에 사용됨
           컴포넌트 unmount 시에 1회 실행됨 mount 시 실행되는 것 아님
            */
+          setFade('');
         clearTimeout(a); // 타이머 제거  
+        clearTimeout(b);
       }
     }, [count] // []안에 있는 변수 or state가 변경이 있을 시 useEffect를 실행)
     );
 
     return(
-        <div className="container">
+        <div className={`container start ${fade}`}>
           <YellowBtn>버튼</YellowBtn>
           <Box>box</Box>
           
@@ -187,7 +191,19 @@ function TabContent({nav}){ // props 위치에 {} 쓰고 가능
   //     return  <div>내용2</div>
   // }
 
-  return [<div>내용0</div>,<div>내용1</div>,<div>내용2</div>][nav];
+  let [fade,setFade] = useState('');
+
+  // automatic batching - 가까이에 있는 state set함수 모아서 한번에 렌더링해줌(리액트 최신버전)
+  useEffect(()=>{
+    let a = setTimeout(()=>{setFade('end')},100);
+    
+    return ()=>{
+      clearTimeout(a);
+      setFade('');
+    }
+  },[nav])
+
+  return <div className={"start "+fade}>{[<div>내용0</div>,<div>내용1</div>,<div>내용2</div>][nav]}</div>
 }
 
 
