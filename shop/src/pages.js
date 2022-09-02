@@ -46,10 +46,10 @@ function Home(props){
         }
       </Row>
       </Container>
-      {/* ajax 사용 옵션
-      1.  XMLHttpRequest
-      2. fetch()
-      3. axios 같은 라이브러리*/} 
+        {/* ajax 사용 옵션
+        1.  XMLHttpRequest
+        2. fetch()
+        3. axios 같은 라이브러리*/} 
 
       <button onClick={()=>{ 
           setLoading(true);
@@ -126,7 +126,7 @@ function Detail(props){
     let [count,setCount] = useState(0);
     let[on,setOn] = useState(true);
     let[text,setText] = useState("");
-    
+    let[nav,setNav] = useState(0);
 
     useEffect(()=>{
       setOn(true);
@@ -140,11 +140,6 @@ function Detail(props){
       }
     }, [count] // []안에 있는 변수 or state가 변경이 있을 시 useEffect를 실행)
     );
-
-    useEffect(()=>{
-      alert('hi');
-    },[text]);
-
 
     return(
         <div className="container">
@@ -163,8 +158,37 @@ function Detail(props){
               <button className="btn btn-danger" onClick={()=>{{setCount(count+1)}}}>주문하기</button> 
             </div>
           </div>
+          <Nav variant="tabs" defaultActiveKey="link0">
+          <Nav.Item>
+          <Nav.Link eventKey="link0" onClick={()=>{setNav(0)}}>버튼0</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+          <Nav.Link eventKey="link1" onClick={()=>{setNav(1)}}>버튼1</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+          <Nav.Link eventKey="link2" onClick={()=>{setNav(2)}}>버튼2</Nav.Link>
+          </Nav.Item>
+        </Nav>
+        
+        <TabContent nav = {nav}></TabContent>
+        
         </div> 
     );
 }
+
+function TabContent({nav}){ // props 위치에 {} 쓰고 가능
+  // if ( nav == 0){
+  //     return <div>내용0</div>
+  // }
+  // if (nav == 1 ){
+  //     return <div>내용1</div>
+  // }
+  // if (nav == 2 ){
+  //     return  <div>내용2</div>
+  // }
+
+  return [<div>내용0</div>,<div>내용1</div>,<div>내용2</div>][nav];
+}
+
 
 export {Home,Detail};
