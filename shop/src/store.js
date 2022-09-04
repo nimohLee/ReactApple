@@ -14,16 +14,21 @@ import { useResolvedPath } from 'react-router-dom'
 
 let user = createSlice({ 
     name : 'user',
-    initialState : 'kim',
+    initialState : {name : 'Kim',age : 20},
     reducers : {
             changeName(state){ // state는 기존 state
-                return 'john'+state
+                return {name : 'Park',age : 20};
+                /* return 없이 아래처럼도 가능 */
+                // state.name = 'park'
+            },
+            plusAge(state,a){
+                state.age = state.age+a.payload;
             }
     }
 
 })
 
-export let { changeName } = user.actions
+export let { changeName, plusAge } = user.actions
 
 let stock = createSlice({ 
     name : 'stock',
@@ -38,12 +43,36 @@ let items = createSlice({
       ],
 
     reducers : {
-        plusStock(state){
-            return state.count++;
+        plusStock(state,action){
+            state.findIndex((a)=>{
+                return a.id == action.payload;
+            })
+            state[action.payload].count++;
+        },
+
+        addItem(state,action){
+            const item = action.payload;
+            let isExist = state.findIndex((a)=>{
+                return a.id == item.id;
+            })
+            console.log(isExist);
+            if(isExist==-1){
+                state.push(action.payload);
+            }
+            else
+                state[isExist].count++;
+            
+            
+        },
+        deleteItem(state,action){
+            state.splice(0,action.payload);
         }
-    }
+
+        }
+    
 })
-export let { plusStock } = items.actions
+export let { plusStock, addItem, deleteItem } = items.actions
+
 export default configureStore({
     reducer : {
         /* (중요) 여기에 등록해야 사용가능 */ 

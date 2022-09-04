@@ -7,6 +7,10 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import './pages.css';
 import axios from 'axios';
+import { addItem } from './store.js';
+import { useDispatch, useSelector } from "react-redux";
+
+
 
 let YellowBtn = styled.button`
   background : yellow;
@@ -23,6 +27,8 @@ let FlexBox = styled.div`
   display : flex;
 `
 let count = 0;
+
+
 
 
 function Home(props){
@@ -113,6 +119,10 @@ return(
 
 function Detail(props){
 
+  let state = useSelector((state)=> state);
+  let dispatch = useDispatch();
+
+
   /**
    * useParams 라이브러리 
    * Route 사용 시 /:id 처리 한 경우 해당 사용자가 get한 id값을 불러와줌
@@ -122,6 +132,7 @@ function Detail(props){
     let 찾은상품 = props.shoes.find(function(x) {
       return x.id == id
     });
+    
 
     let [count,setCount] = useState(0);
     let[on,setOn] = useState(true);
@@ -159,7 +170,11 @@ function Detail(props){
               <h4 className="pt-5" >{찾은상품.title}</h4>
               <p>{찾은상품.content}</p>
               <p>{찾은상품.price}</p>
-              <button className="btn btn-danger" onClick={()=>{{setCount(count+1)}}}>주문하기</button> 
+              <button className="btn btn-danger" onClick={()=>{{
+                dispatch(addItem({id : 찾은상품.id, name : 찾은상품.title, count : +1}));
+              }
+                
+                }}>   주문하기</button> 
             </div>
           </div>
           <Nav variant="tabs" defaultActiveKey="link0">

@@ -1,6 +1,6 @@
 
 /**
- * title : 상품명, content : 상품설명, price : 가격
+ * id: id값 ,title : 상품명, content : 상품설명, price : 가격
  */
 let data = [
     {
@@ -24,8 +24,8 @@ let data = [
       price : 130000
     }
   ] 
-function Shoes(props){
-   
+function Shoes(props){ 
+  
     return(
         <div className="shoes-item">
             <img src={'https://codingapple1.github.io/shop/'+props.img+'.jpg'} width = "80%"></img>
