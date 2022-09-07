@@ -31,6 +31,7 @@ let count = 0;
 
 
 
+
 function Home(props){
   let [onData,setOnData] = useState(false);
   let [jsonData,setJsonData] = useState();
@@ -121,7 +122,7 @@ function Detail(props){
 
   let state = useSelector((state)=> state);
   let dispatch = useDispatch();
-
+  
 
   /**
    * useParams 라이브러리 
@@ -132,6 +133,25 @@ function Detail(props){
     let 찾은상품 = props.shoes.find(function(x) {
       return x.id == id
     });
+
+
+    useEffect(()=>{
+
+     return() =>{ if(localStorage.getItem('visited') == null){
+        let visited = [];
+        visited.push(id);
+        localStorage.setItem('visited',JSON.stringify(visited));
+      }else{
+        let visited = JSON.parse(localStorage.getItem('visited'));
+        visited.push(id);
+        localStorage.setItem('visited',JSON.stringify(visited));
+      };
+    }
+    });
+
+      
+
+      
     
 
     let [count,setCount] = useState(0);

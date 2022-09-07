@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, useEffect, useState, Suspense } from "react";
 
 import logo from './logo.svg';
 import './App.css';
@@ -9,6 +9,17 @@ import {Shoes,data} from './data.js';
 import {Routes,Route,Link, useNavigate, Outlet} from 'react-router-dom'
 import {Home,Detail} from './pages.js';
 import Cart from './Cart.js';
+import axios from 'axios';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import styled from 'styled-components';
+
+// const Detail = lazy(()=> import('./pages.js'))
+
+let Label = styled.div`
+  
+  color : white;
+ 
+`
 
 function App() {
 
@@ -24,17 +35,32 @@ function App() {
    */
   let navigate = useNavigate();
   let [shoes,setShoes] = useState(data);
-  
-  return (
+  let userdata;
+
+let result = useQuery(['작명'], ()=>
+ axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{return a.data})
+);
+
+ 
+ 
+ 
+ 
+        return (
     <div className="App">
 
  <Navbar bg="dark" variant="dark">
         <Container>
-        <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
-        <Nav className="me-auto">
-          <Nav.Link onClick={()=>{navigate(-1)}}>Home</Nav.Link> 
-          <Nav.Link onClick={()=>{navigate('/detail/0')}}>Detail</Nav.Link>
-          <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
+          <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
+            <Nav className="me-auto">
+              <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link> 
+               <Nav.Link onClick={()=>{navigate('/detail/0')}}>Detail</Nav.Link>
+                <Nav.Link onClick={()=>{navigate('/cart')}}>Cart</Nav.Link>
+             </Nav>
+        
+        <Nav className="ms-auto">
+          {/* {result.isLoading ? "로딩중" : result.data.name};
+           */}
+           <Label>안녕하세유</Label>
         </Nav>
         </Container>
       </Navbar>
